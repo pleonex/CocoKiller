@@ -27,11 +27,11 @@ import javax.swing.Timer;
  * Representa a un personaje en el juego.
  */
 public class Personaje {
-    private final static int ANI_PERIOD = 100;
+    private final static int ANI_PERIOD = 140;
     
     private final Timer tmrAni;
     
-    private final Timer tmrMov;
+    //private final Timer tmrMov;
     
     private Image currImg;
     
@@ -43,7 +43,7 @@ public class Personaje {
     public Personaje(final ActionListener runMov, final int veloc,
             final int numVidas, final Punto posIni, final Image[] imgs) {
         this.tmrAni = new Timer(ANI_PERIOD, new AnimacionTask(imgs));
-        this.tmrMov = new Timer(veloc, runMov);
+        //this.tmrMov = new Timer(veloc, runMov);
         this.vidas  = numVidas;
         this.posicion = posIni;
     }
@@ -74,12 +74,12 @@ public class Personaje {
 
     public void start() {
         this.tmrAni.start();
-        this.tmrMov.start();
+        //this.tmrMov.start();
     }
     
     public void stop() {
         this.tmrAni.stop();
-        this.tmrMov.stop();
+        //this.tmrMov.stop();
     }
     
     private class AnimacionTask implements ActionListener {
