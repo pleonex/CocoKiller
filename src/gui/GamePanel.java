@@ -24,7 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 import modelos.Personaje;
-import modelos.Punto;
+import modelos.PersonajeFactory;
 
 /**
  * Contenedor del juego.
@@ -39,7 +39,7 @@ public class GamePanel extends javax.swing.JPanel {
     public GamePanel() {
         initComponents();
         
-        this.pacman = new Personaje(null, 100, 3, new Punto(0, 0), Configuracion.getPacmanImgs());
+        this.pacman = PersonajeFactory.CreaPacman1();
         this.pacman.start();
         
         // 60 fps

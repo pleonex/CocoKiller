@@ -18,6 +18,7 @@
 
 package modelos;
 
+import controladores.MovPersonaje;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -31,7 +32,7 @@ public class Personaje {
     
     private final Timer tmrAni;
     
-    //private final Timer tmrMov;
+    private final Timer tmrMov;
     
     private Image currImg;
     
@@ -40,10 +41,11 @@ public class Personaje {
     private Punto posicion;
     
     
-    public Personaje(final ActionListener runMov, final int veloc,
+    public Personaje(final MovPersonaje movPer, final int veloc,
             final int numVidas, final Punto posIni, final Image[] imgs) {
+        movPer.setPersonaje(this);
         this.tmrAni = new Timer(ANI_PERIOD, new AnimacionTask(imgs));
-        //this.tmrMov = new Timer(veloc, runMov);
+        this.tmrMov = new Timer(veloc, movPer);
         this.vidas  = numVidas;
         this.posicion = posIni;
     }
@@ -74,12 +76,12 @@ public class Personaje {
 
     public void start() {
         this.tmrAni.start();
-        //this.tmrMov.start();
+        this.tmrMov.start();
     }
     
     public void stop() {
         this.tmrAni.stop();
-        //this.tmrMov.stop();
+        this.tmrMov.stop();
     }
     
     private class AnimacionTask implements ActionListener {
