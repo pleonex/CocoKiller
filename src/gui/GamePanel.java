@@ -23,8 +23,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import modelos.Bloque;
@@ -55,16 +53,19 @@ public class GamePanel extends javax.swing.JPanel {
     }
     
     public void nuevoJuego() {
-        this.escenario = new Escenario(Configuracion.getMapImg(0), Configuracion.getColiImg(0));
+        if (this.escenario != null)
+            this.escenario.stop();
         
-        Pacman pacman1 = PersonajeFactory.CreaPacman1(this.escenario);
-        pacman1.start();
+        this.escenario = new Escenario(
+                Configuracion.getMapImg(0),
+                Configuracion.getColiImg(0),
+                20
+        );
+        this.escenario.start();
         
-        Pacman pacman2 = PersonajeFactory.CreaPacman2(this.escenario);
-        pacman2.start();      
-        
-        Personaje fantasma = PersonajeFactory.CreaFantasma(escenario, 0);
-        fantasma.start();
+        PersonajeFactory.CreaPacman1(this.escenario);
+        PersonajeFactory.CreaPacman2(this.escenario);    
+        PersonajeFactory.CreaFantasma(escenario, 0);
         
         // 60 fps
         this.tmrPainter.restart();

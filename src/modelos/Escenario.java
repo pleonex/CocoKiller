@@ -23,11 +23,14 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Timer;
 
 /**
  * Escenario del juego.
  */
 public class Escenario {
+    private final static int DELAY_EFECTOS = 140;
+    
     private final Bloque[][] colisiones;
     private final BufferedImage mapa;
     
@@ -35,13 +38,21 @@ public class Escenario {
     private final List<Pacman> pacmans;
     private final List<Fantasma> fantasmas;
     
-    public Escenario(BufferedImage imgMapa, BufferedImage imgColi) {
+    private final Timer tmrEfectos;
+    private final Timer tmrMovPacmans;
+    private final Timer tmrMovFantasmas;
+    
+    public Escenario(BufferedImage imgMapa, BufferedImage imgColi, int velocidad) {
         this.mapa = imgMapa;
         this.colisiones = new Bloque[imgColi.getWidth()][imgColi.getHeight()];
         loadColisiones(imgColi);
         
         this.pacmans   = new ArrayList<>();
         this.fantasmas = new ArrayList<>();
+        
+        this.tmrEfectos      = new Timer(DELAY_EFECTOS, null);
+        this.tmrMovPacmans   = new Timer(velocidad, null);
+        this.tmrMovFantasmas = new Timer(velocidad, null);
     }
     
     private void loadColisiones(BufferedImage imgColi) {
@@ -83,16 +94,20 @@ public class Escenario {
         return this.colisiones[x][y];
     }
     
+    public void addPacman(final Pacman pacman) {
+        this.pacmans.add(pacman);
+        this.tmrEfectos.addActionListener(pacman.getEfectoTick());
+        this.tmrMovPacmans.addActionListener(pacman.getMovimiento());
+    }
+    
     public Pacman[] getPacmans() {
         return this.pacmans.toArray(new Pacman[0]);
     }
     
-    public void addPacman(final Pacman pacman) {
-        this.pacmans.add(pacman);
-    }
-    
     public void addFantasma(final Fantasma fantasma) {
         this.fantasmas.add(fantasma);
+        this.tmrEfectos.addActionListener(fantasma.getEfectoTick());
+        this.tmrMovFantasmas.addActionListener(fantasma.getMovimiento());
     }
     
     public Fantasma[] getFantasmas() {
@@ -121,5 +136,17 @@ public class Escenario {
                     permitido = false;
         
         return permitido;
+    }
+    
+    public void stop() {
+        this.tmrEfectos.stop();
+        this.tmrMovFantasmas.stop();
+        this.tmrMovPacmans.stop();
+    }
+    
+    public void start() {
+        this.tmrEfectos.restart();
+        this.tmrMovFantasmas.restart();
+        this.tmrMovPacmans.restart();
     }
 }

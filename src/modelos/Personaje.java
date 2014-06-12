@@ -23,18 +23,11 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import javax.swing.Timer;
 
 /**
  * Representa a un personaje en el juego.
  */
-public class Personaje {
-    private final static int ANI_PERIOD = 140;
-    
-    private final Timer tmrAni;
-    
-    private final Timer tmrMov;
-    
+public abstract class Personaje {
     private final MovPersonaje movPer;
     
     private final Escenario escenario;
@@ -45,12 +38,9 @@ public class Personaje {
     
     private Punto posicion;    
     
-    public Personaje(final MovPersonaje movPer, final int veloc,
-            final int numVidas, final Punto posIni, final BufferedImage[] imgs,
-            final Escenario escenario) {
+    public Personaje(final MovPersonaje movPer, final int numVidas,
+            final Punto posIni, final BufferedImage[] imgs, final Escenario escenario) {
         this.movPer  = movPer;
-        this.tmrMov  = new Timer(veloc, movPer);
-        this.tmrAni  = new Timer(ANI_PERIOD, new AnimacionTask(imgs));
         this.currImg = imgs[0];
         this.vidas   = numVidas;
         this.posicion  = posIni;
@@ -94,7 +84,7 @@ public class Personaje {
         return this.currImg;
     }
     
-    private void setCurrentImage(final BufferedImage img) {
+    protected void setCurrentImage(final BufferedImage img) {
         this.currImg = img;
     }
     
@@ -106,29 +96,5 @@ public class Personaje {
         return this.movPer;
     }
     
-    public void start() {
-        this.tmrAni.start();
-        this.tmrMov.start();
-    }
-    
-    public void stop() {
-        this.tmrAni.stop();
-        this.tmrMov.stop();
-    }
-    
-    private class AnimacionTask implements ActionListener {
-        private final BufferedImage[] images;
-        private int idx;
-        
-        public AnimacionTask(final BufferedImage[] images) {
-            this.images = images;
-        }
-        
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            setCurrentImage(this.images[this.idx++]);
-            if (this.idx >= this.images.length)
-                this.idx = 0;
-        }
-    }
+    public abstract ActionListener getEfectoTick();
 }

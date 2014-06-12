@@ -18,7 +18,6 @@
 
 package modelos;
 
-import controladores.MovFantasma;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -26,28 +25,20 @@ import java.awt.image.BufferedImage;
 /**
  *
  */
-public class Fantasma extends Personaje {
-    private final MovFantasma movFantasma;
-    private final EfectoBasico efectoTick;
-    
-    public Fantasma(final Punto posIni, final int vidas,
-            final BufferedImage[] imgs, final Escenario escenario) {
-        super(new MovFantasma(), vidas, posIni, imgs, escenario);
-        
-        this.movFantasma = (MovFantasma)this.getMovimiento();
-        this.movFantasma.setFantasma(this);
-        
-        this.efectoTick = new EfectoBasico(imgs) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                super.actionPerformed(e);
-                setCurrentImage(this.getCurrentImage());
-            }
-        };
+public abstract class EfectoBasico implements ActionListener {
+    private final BufferedImage[] images;
+    private int idx;
+
+    public EfectoBasico(final BufferedImage[] images) {
+        this.images = images;
+    }
+
+    public BufferedImage getCurrentImage() {
+        return this.images[this.idx];
     }
 
     @Override
-    public ActionListener getEfectoTick() {
-        return this.efectoTick;
+    public void actionPerformed(ActionEvent e) {
+        this.idx = (this.idx + 1 >= this.images.length) ? 0 : this.idx + 1;
     }
 }

@@ -21,23 +21,38 @@ package modelos;
 import controladores.Direccion;
 import controladores.Mando;
 import controladores.MovPacman;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 /**
  *
  */
 public class Pacman extends Personaje {
+    private final EfectoBasico efectoTick;
     private final MovPacman movPacman;
     private int puntos;
         
-    public Pacman(final Punto posIni, final Direccion direccion, final int veloc,
-            final int vidas, final BufferedImage[] imgs, final Escenario escenario,
-            final Mando mando) {
-        super(new MovPacman(direccion, mando), veloc, vidas, posIni, imgs, escenario);
+    public Pacman(final Punto posIni, final Direccion direccion, final int vidas,
+            final BufferedImage[] imgs, final Escenario escenario, final Mando mando) {
+        super(new MovPacman(direccion, mando), vidas, posIni, imgs, escenario);
         
         this.movPacman = (MovPacman)this.getMovimiento();
         this.movPacman.setPacman(this);
         this.puntos = 0;
+        
+        this.efectoTick = new EfectoBasico(imgs) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                super.actionPerformed(e);
+                setCurrentImage(this.getCurrentImage());
+            }
+        };
+    }
+
+    @Override
+    public ActionListener getEfectoTick() {
+        return this.efectoTick;
     }
     
     public int getPuntos() {

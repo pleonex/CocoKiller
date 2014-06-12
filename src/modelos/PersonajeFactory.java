@@ -29,7 +29,6 @@ public class PersonajeFactory {
         Pacman p = new Pacman(
                 new Punto(5, 4),
                 Direccion.DERECHA,
-                20,
                 3,
                 Configuracion.getPacman1Imgs(),
                 escenario,
@@ -43,7 +42,6 @@ public class PersonajeFactory {
         Pacman p = new Pacman(
                 new Punto(204, 180),
                 Direccion.ABAJO,
-                20,
                 3,
                 Configuracion.getPacman2Imgs(),
                 escenario,
@@ -56,7 +54,6 @@ public class PersonajeFactory {
     public static Fantasma CreaFantasma(final Escenario escenario, int tipo) {
         Fantasma f = new Fantasma(
                 new Punto(68, 84),
-                21,
                 1,
                 Configuracion.getFantasmasImg(tipo),
                 escenario
