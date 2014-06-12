@@ -19,7 +19,6 @@
 package modelos;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
@@ -28,9 +27,9 @@ import java.awt.image.DataBufferByte;
  */
 public class Escenario {
     private final Bloque[][] colisiones;
-    private final Image mapa;
+    private final BufferedImage mapa;
     
-    public Escenario(Image imgMapa, BufferedImage imgColi) {
+    public Escenario(BufferedImage imgMapa, BufferedImage imgColi) {
         this.mapa = imgMapa;
         this.colisiones = LoadColisiones(imgColi);
     }
@@ -44,11 +43,12 @@ public class Escenario {
         for (int x = 0; x < imgColi.getWidth(); x++) {
             for (int y = 0; y < imgColi.getHeight(); y++) {
                 int index = (y * imgColi.getWidth() + x) * bpp;
+                index += hasAlpha ? 1 : 0;
                 Color color = new Color(
-                        pixels[index++] & 0xFF,
-                        pixels[index++] & 0xFF,
-                        pixels[index++] & 0xFF,
-                        hasAlpha ? (pixels[index] & 0xFF) : 255
+                        pixels[index + 2] & 0xFF,
+                        pixels[index + 1] & 0xFF,
+                        pixels[index + 0] & 0xFF,
+                        hasAlpha ? (pixels[index - 1] & 0xFF) : 255
                 );
                 colisiones[x][y] = Bloque.FromColor(color);
             }
@@ -57,8 +57,20 @@ public class Escenario {
         return colisiones;
     }
     
-    public Image getMapa() {
+    public BufferedImage getMapa() {
         return this.mapa;
+    }
+    
+    public int getWidth() {
+        return this.mapa.getWidth();
+    }
+    
+    public int getHeight() {
+        return this.mapa.getHeight();
+    }
+    
+    public Bloque getBloque(final int x, final int y) {
+        return this.colisiones[x][y];
     }
     
     public boolean isPosicionPermitida(final Punto posicion, final int width,

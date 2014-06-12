@@ -25,7 +25,7 @@ import modelos.Punto;
  *
  */
 public class MovPacman extends MovPersonaje {
-    private static final int MAX_INTENTOS = 10;
+    private static final int MAX_INTENTOS = 15;
     private int intentos = -1;
     private Direccion futuraDireccion;
     

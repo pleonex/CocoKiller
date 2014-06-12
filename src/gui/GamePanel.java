@@ -24,6 +24,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+import modelos.Bloque;
 import modelos.Escenario;
 import modelos.Personaje;
 import modelos.PersonajeFactory;
@@ -64,6 +65,9 @@ public class GamePanel extends javax.swing.JPanel {
         // Dibuja el mapa
         g.drawImage(this.escenario.getMapa(), 0, 0, this);
         
+        // Dibuja elementos extras
+        this.paintExtraElements(g);
+        
         // Dibuja a Pacman
         g.drawImage(
                 this.pacman.getCurrentImage(),
@@ -80,6 +84,30 @@ public class GamePanel extends javax.swing.JPanel {
             this.fps = this.fpsCounter;
             this.fpsCounter = 0;
             this.fpsTime = System.nanoTime();
+        }
+    }
+    
+    private void paintExtraElements(final Graphics g) {
+        for (int x = 0; x < this.escenario.getWidth(); x++) {
+            for (int y = 0; y < this.escenario.getHeight(); y++) {
+                Bloque bloque = this.escenario.getBloque(x, y);
+                switch (bloque) {
+                    case COM_PEQUE:
+                        g.setColor(Color.white);
+                        g.fillRect(x, y - 1, 2, 2);
+                        break;
+                        
+                    case COM_GRANDE:
+                        g.setColor(Color.blue);
+                        g.fillOval(x - 2, y - 2, 5, 5);
+                        break;
+                        
+                    case PUERTA:
+                        g.setColor(Color.green);
+                        g.drawRect(x, y, 1, 1);
+                        break;
+                }
+            }
         }
     }
     
