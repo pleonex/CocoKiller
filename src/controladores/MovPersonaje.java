@@ -27,6 +27,8 @@ import modelos.Punto;
  *
  */
 public abstract class MovPersonaje implements ActionListener {
+    private static final int INCR = 1;
+    
     private Personaje personaje;
     private Direccion direccion;
  
@@ -52,34 +54,57 @@ public abstract class MovPersonaje implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        // Calcula el desplazamiento
-        int dx = 0;
-        int dy = 0;
-        switch (this.getDireccion()) {
-            case ABAJO: dx = 0; dy = 1; break;
-            case ARRIBA: dx = 0; dy = -1; break;
-            case DERECHA: dx = 1; dy = 0; break;
-            case IZQUIERDA: dx = -1; dy = 0; break;
-        }
-        
-        // A partir de este obtiene la siguiente posición.
-        Punto sigPos = this.getPersonaje().getPosicion().offset(dx, dy);
+        Punto sigPos = this.getIncrementPosicion();
         
         // Comprueba que el siguiente movimiento sea posible.
-        boolean valida = this.personaje.getEscenario().isPosicionPermitida(
-                sigPos,
-                this.personaje.getCurrentImage().getWidth(),
-                this.personaje.getCurrentImage().getHeight()
-        );
+        boolean valida = this.isPosicionValida(sigPos);
         
         // Si el movimiento es inválido, pregunta por una posición buena.
         if (!valida)
             sigPos = this.getSiguientePosicion();
-        
+                
         // Muévete si puedes
         if (sigPos != null)
             this.getPersonaje().setPosicion(sigPos);
+        
+        // Avisa del cambio
+        this.enCambio(sigPos);
+    }
+    
+    protected boolean testDireccion(final Direccion direccion) {
+        Direccion oldDir = this.direccion;
+        this.direccion   = direccion;
+        boolean valida   = this.isPosicionValida(this.getIncrementPosicion());
+        this.direccion   = oldDir;
+        
+        return valida;
+    }
+    
+    protected boolean isPosicionValida(Punto pos) {
+        // Comprueba que el siguiente movimiento sea posible.
+        return this.personaje.getEscenario().isPosicionPermitida(
+                pos,
+                this.personaje.getCurrentImage().getWidth(),
+                this.personaje.getCurrentImage().getHeight()
+        );
+    }
+    
+    protected Punto getIncrementPosicion() {
+         // Calcula el desplazamiento
+        int dx = 0;
+        int dy = 0;
+        switch (this.getDireccion()) {
+            case ABAJO: dx = 0; dy = INCR; break;
+            case ARRIBA: dx = 0; dy = -INCR; break;
+            case DERECHA: dx = INCR; dy = 0; break;
+            case IZQUIERDA: dx = -INCR; dy = 0; break;
+        }
+        
+        // A partir de este obtiene la siguiente posición.
+        return this.getPersonaje().getPosicion().offset(dx, dy);       
     }
     
     protected abstract Punto getSiguientePosicion();
+    
+    protected abstract void enCambio(final Punto punto);
 }

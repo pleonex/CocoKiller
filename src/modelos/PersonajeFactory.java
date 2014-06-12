@@ -31,7 +31,7 @@ public class PersonajeFactory {
                 new MovPacman(Direccion.DERECHA),
                 20,
                 3,
-                new Punto(5, 5),
+                new Punto(5, 4),
                 Configuracion.getPacmanImgs(),
                 escenario
         );
