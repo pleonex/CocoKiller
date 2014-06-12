@@ -18,40 +18,39 @@
 
 package controladores;
 
+import modelos.Punto;
+
 /**
  *
  */
-public enum Direccion {
-    ARRIBA,
-    ABAJO,
-    DERECHA,
-    IZQUIERDA;
-    
-    public static Direccion Aleatoria() {
-        switch ((int)Math.round(Math.random() * 3)) {
-            case 0: return ARRIBA;
-            case 1: return ABAJO;
-            case 2: return DERECHA;
-            case 3: return IZQUIERDA;
-        }
-        
-        return null;
+public class MovFantasma extends MovPersonaje {
+
+    public MovFantasma() {
+        super(Direccion.Aleatoria());
     }
     
-    public Direccion AleatoriaPerpendicular() {
-        switch ((int)Math.round(Math.random() * 1)) {
-            case 0:
-                if (this == ARRIBA || this == ABAJO)
-                    return DERECHA;
-                else
-                    return ARRIBA;
-            case 1:
-                if (this == ARRIBA || this == ABAJO)
-                    return IZQUIERDA;
-                else
-                    return ABAJO;
-        }
-        
-        return null;
+    @Override
+    protected Punto getSiguientePosicion() {
+        this.cambiaDireccion(true);
+        return this.getIncrementPosicion();
+    }
+
+    @Override
+    protected void enCambio() {
+        if ((int)Math.round(Math.random() * 4) < 2.0)
+            this.cambiaDireccion(false);
+    }
+    
+    private void cambiaDireccion(boolean bloqueante) {
+        int intentos = 0;
+        while (intentos < 4 || bloqueante) {
+            Direccion dir = this.getDireccion().AleatoriaPerpendicular();
+            if (this.testDireccion(dir)) {
+                this.setDireccion(dir);
+                return;
+            } else {
+                intentos++;
+            }
+        }        
     }
 }

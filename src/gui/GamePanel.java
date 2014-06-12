@@ -24,7 +24,6 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import modelos.Bloque;
 import modelos.Escenario;
@@ -34,9 +33,7 @@ import modelos.PersonajeFactory;
 /**
  * Contenedor del juego.
  */
-public class GamePanel extends javax.swing.JPanel {
-    private final JFrame container;
-    
+public class GamePanel extends javax.swing.JPanel {    
     private long fpsTime;
     private int fps;
     private int fpsCounter;
@@ -47,7 +44,6 @@ public class GamePanel extends javax.swing.JPanel {
     
     public GamePanel(final JFrame container) {
         initComponents();
-        this.container = container;
         this.tmrPainter = new Timer(17, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +58,10 @@ public class GamePanel extends javax.swing.JPanel {
         this.pacman = PersonajeFactory.CreaPacman1(this.escenario);
         this.escenario.setPacman(this.pacman);
         this.pacman.start();
+        
+        Personaje fantasma = PersonajeFactory.CreaFantasma(escenario, 0);
+        this.escenario.addFantasma(fantasma);
+        fantasma.start();
         
         // 60 fps
         this.tmrPainter.restart();
@@ -97,6 +97,16 @@ public class GamePanel extends javax.swing.JPanel {
                 this.pacman.getPosicion().getY(),
                 this
         );
+        
+        // Dibuja los fantasmas
+        for (Personaje fantasma : this.escenario.getFantasmas()) {
+            g.drawImage(
+                    fantasma.getCurrentImage(),
+                    fantasma.getPosicion().getX(),
+                    fantasma.getPosicion().getY(),
+                    this
+            );
+        }
         
         // Calcula los FPS
         this.fpsCounter++;

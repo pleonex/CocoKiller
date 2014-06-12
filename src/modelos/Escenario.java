@@ -21,6 +21,8 @@ package modelos;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Escenario del juego.
@@ -31,11 +33,13 @@ public class Escenario {
     
     private int foodBalls;
     private Personaje pacman;
+    private List<Personaje> fantasmas;
     
     public Escenario(BufferedImage imgMapa, BufferedImage imgColi) {
         this.mapa = imgMapa;
         this.colisiones = new Bloque[imgColi.getWidth()][imgColi.getHeight()];
         loadColisiones(imgColi);
+        this.fantasmas = new ArrayList<>();
     }
     
     private void loadColisiones(BufferedImage imgColi) {
@@ -83,6 +87,14 @@ public class Escenario {
     
     public void setPacman(final Personaje pacman) {
         this.pacman = pacman;
+    }
+    
+    public void addFantasma(final Personaje fantasma) {
+        this.fantasmas.add(fantasma);
+    }
+    
+    public Personaje[] getFantasmas() {
+        return this.fantasmas.toArray(new Personaje[0]);
     }
     
     public void clearBloque(final int x, final int y) {

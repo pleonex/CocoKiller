@@ -19,6 +19,7 @@
 package modelos;
 
 import controladores.Direccion;
+import controladores.MovFantasma;
 import controladores.MovPacman;
 import gui.Configuracion;
 
@@ -32,6 +33,17 @@ public class PersonajeFactory {
                 20,
                 3,
                 new Punto(5, 4),
+                Configuracion.getPacmanImgs(),
+                escenario
+        );
+    }
+    
+    public static Personaje CreaFantasma(final Escenario escenario, int tipo) {
+        return new Personaje(
+                new MovFantasma(),
+                21,
+                1,
+                new Punto(68, 84),
                 Configuracion.getPacmanImgs(),
                 escenario
         );
