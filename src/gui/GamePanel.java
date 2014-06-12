@@ -37,12 +37,14 @@ public class GamePanel extends javax.swing.JPanel {
     private int fps;
     private int fpsCounter;
     
-    private final Escenario escenario;
-    private final Personaje pacman;
+    private Escenario escenario;
+    private Personaje pacman;
     
     public GamePanel() {
         initComponents();
-        
+    }
+    
+    public void nuevoJuego() {
         this.escenario = new Escenario(Configuracion.getMapImg(0), Configuracion.getColiImg(0));
         
         this.pacman = PersonajeFactory.CreaPacman1(this.escenario);
@@ -54,13 +56,17 @@ public class GamePanel extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 repaint();
             }
-        }).start();
+        }).start();       
     }
 
     @Override
     protected void paintComponent(final Graphics g) {
         // Borra todo y pinta el fondo
         super.paintComponent(g);
+        
+        // Comprueba que se ha iniciado el juego
+        if (this.escenario == null)
+            return;
         
         // Dibuja el mapa
         g.drawImage(this.escenario.getMapa(), 0, 0, this);
