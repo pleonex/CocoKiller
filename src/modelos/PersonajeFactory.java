@@ -44,7 +44,7 @@ public class PersonajeFactory {
                 21,
                 1,
                 new Punto(68, 84),
-                Configuracion.getPacmanImgs(),
+                Configuracion.getFantasmasImg(tipo),
                 escenario
         );
     }

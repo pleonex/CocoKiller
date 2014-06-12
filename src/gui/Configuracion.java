@@ -30,6 +30,7 @@ import javax.imageio.ImageIO;
  */
 public class Configuracion {
     private static List<BufferedImage> PacmanImgs;
+    private static List<BufferedImage> FantasmaImgs0;
     private static List<BufferedImage[]> MapImgs;
     
     public static void Inicializa(final String resPath) {
@@ -44,6 +45,9 @@ public class Configuracion {
                 PacmanImgs.add(ImageIO.read(currFile));
                 currFile = new File(resPath, "pacman" + (++i) + ".png");
             }
+            
+            // Load ghosts
+            FantasmaImgs0 = LoadImages(resPath, "fantasma0_D", ".png");
 
             // Load map images
             i = 0;
@@ -61,6 +65,23 @@ public class Configuracion {
         }
     }
     
+    private static List<BufferedImage> LoadImages(final String resPath, 
+                                    final String preStr, final String postStr) {
+        int i = 0;
+        List<BufferedImage> imgs = new ArrayList<>();
+        File currFile = new File(resPath, preStr + i + postStr);        
+        try {
+            while (currFile.exists()) {
+                imgs.add(ImageIO.read(currFile));
+                currFile = new File(resPath, preStr + (++i) + postStr);
+            }
+        } catch(IOException ex) {
+            
+        }
+        
+        return imgs;
+    }
+    
     public static BufferedImage[] getPacmanImgs() {
         return PacmanImgs.toArray(new BufferedImage[0]);
     }
@@ -71,5 +92,12 @@ public class Configuracion {
     
     public static BufferedImage getColiImg(int level) {
         return MapImgs.get(level)[1];
+    }
+    
+    public static BufferedImage[] getFantasmasImg(int tipo) {
+        if (tipo == 0)
+            return FantasmaImgs0.toArray(new BufferedImage[0]);
+        else
+            return null;
     }
 }
