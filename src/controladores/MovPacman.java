@@ -35,10 +35,12 @@ public class MovPacman extends MovPersonaje {
     private static final int PUNTOS_COMIDA_PEQUE = 10;
     private static final int PUNTOS_COMIDA_GRANDE = 100;
     
+    private final Mando mando;
     private Pacman pacman;
     
-    public MovPacman(final Direccion direccion) {
+    public MovPacman(final Direccion direccion, final Mando mando) {
         super(direccion);
+        this.mando = mando;
     }
     
     public void setPacman(final Pacman pacman) {
@@ -47,14 +49,20 @@ public class MovPacman extends MovPersonaje {
     }
     
     public void keyPressed(int keyCode) {
-        switch (keyCode) {
-            case KeyEvent.VK_LEFT: this.futuraDireccion = Direccion.IZQUIERDA; break;
-            case KeyEvent.VK_RIGHT: this.futuraDireccion = Direccion.DERECHA; break;
-            case KeyEvent.VK_UP: this.futuraDireccion = Direccion.ARRIBA; break;
-            case KeyEvent.VK_DOWN: this.futuraDireccion = Direccion.ABAJO; break;
-        }
+        this.futuraDireccion = null;
+        this.intentos = -1;
         
-        this.intentos = 0;
+        if (keyCode == this.mando.getIzquierda())
+            this.futuraDireccion = Direccion.IZQUIERDA;
+        else if (keyCode == this.mando.getDerecha())
+            this.futuraDireccion = Direccion.DERECHA;
+        else if (keyCode == this.mando.getArriba())
+            this.futuraDireccion = Direccion.ARRIBA;
+        else if (keyCode == this.mando.getAbajo())
+            this.futuraDireccion = Direccion.ABAJO;
+        
+        if (this.futuraDireccion != null)
+            this.intentos = 0;
     }
     
     @Override

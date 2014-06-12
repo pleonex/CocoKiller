@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import modelos.Escenario;
+import modelos.Pacman;
 import modelos.Punto;
 
 /**
@@ -29,6 +30,7 @@ import modelos.Punto;
  */
 public class Contador extends javax.swing.JPanel {
     private static final Punto POSICION = new Punto(10, 20);
+    private static final int SEPARACION = 20;
     private Escenario escenario;
 
     public Contador() {
@@ -46,11 +48,16 @@ public class Contador extends javax.swing.JPanel {
         if (this.escenario == null)
             return;
         
-        int puntos = this.escenario.getPacman().getPuntos();
-                
-        g.setColor(Color.white);
-        g.setFont(new Font("Courier New", Font.BOLD, 18));
-        g.drawString("Puntos: " + String.format("%04d", puntos), POSICION.getX(), POSICION.getY());
+        int i = 0;
+        for (Pacman p : this.escenario.getPacmans()) {
+            String puntos = String.format("%04d", p.getPuntos());
+            int y = POSICION.getY() + i * SEPARACION;
+            
+            g.setColor(Color.white);
+            g.setFont(new Font("Courier New", Font.BOLD, 18));
+            g.drawString("Puntos" + (i + 1) + ": " + puntos, POSICION.getX(), y);
+            i++;
+        }
     }
     
     @SuppressWarnings("unchecked")

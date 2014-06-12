@@ -18,6 +18,8 @@
 
 package gui;
 
+import controladores.Mando;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +31,8 @@ import javax.imageio.ImageIO;
  *
  */
 public class Configuracion {
-    private static List<BufferedImage> PacmanImgs;
+    private static List<BufferedImage> Pacman1Imgs;
+    private static List<BufferedImage> Pacman2Imgs;
     private static List<BufferedImage> FantasmaImgs0;
     private static List<BufferedImage[]> MapImgs;
     
@@ -38,7 +41,8 @@ public class Configuracion {
         File currFile;
         try {
             // Load pacman images
-            PacmanImgs = LoadImages(resPath, "pacman", ".png");
+            Pacman1Imgs = LoadImages(resPath, "pacman", ".png");
+            Pacman2Imgs = LoadImages(resPath, "pacmana", ".png");
             
             // Load ghosts
             FantasmaImgs0 = LoadImages(resPath, "fantasma0_D", ".png");
@@ -76,8 +80,12 @@ public class Configuracion {
         return imgs;
     }
     
-    public static BufferedImage[] getPacmanImgs() {
-        return PacmanImgs.toArray(new BufferedImage[0]);
+    public static BufferedImage[] getPacman1Imgs() {
+        return Pacman1Imgs.toArray(new BufferedImage[0]);
+    }
+ 
+    public static BufferedImage[] getPacman2Imgs() {
+        return Pacman2Imgs.toArray(new BufferedImage[0]);
     }
     
     public static BufferedImage getMapImg(int level) {
@@ -93,5 +101,25 @@ public class Configuracion {
             return FantasmaImgs0.toArray(new BufferedImage[0]);
         else
             return null;
+    }
+    
+    public static Mando GetMando1() {
+        return new Mando(
+                KeyEvent.VK_LEFT,
+                KeyEvent.VK_RIGHT,
+                KeyEvent.VK_UP,
+                KeyEvent.VK_DOWN,
+                KeyEvent.KEY_LOCATION_LEFT | KeyEvent.VK_CONTROL
+        );
+    }
+    
+    public static Mando GetMando2() {
+        return new Mando(
+                KeyEvent.VK_A,
+                KeyEvent.VK_D,
+                KeyEvent.VK_W,
+                KeyEvent.VK_S,
+                KeyEvent.VK_SPACE
+        );
     }
 }

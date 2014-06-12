@@ -19,7 +19,6 @@
 package modelos;
 
 import controladores.Direccion;
-import controladores.MovFantasma;
 import gui.Configuracion;
 
 /**
@@ -32,10 +31,25 @@ public class PersonajeFactory {
                 Direccion.DERECHA,
                 20,
                 3,
-                Configuracion.getPacmanImgs(),
-                escenario
+                Configuracion.getPacman1Imgs(),
+                escenario,
+                Configuracion.GetMando1()
         );
-        escenario.setPacman(p);
+        escenario.addPacman(p);
+        return p;
+    }
+    
+    public static Pacman CreaPacman2(final Escenario escenario) {
+        Pacman p = new Pacman(
+                new Punto(204, 180),
+                Direccion.ABAJO,
+                20,
+                3,
+                Configuracion.getPacman2Imgs(),
+                escenario,
+                Configuracion.GetMando2()
+        );
+        escenario.addPacman(p);
         return p;
     }
     

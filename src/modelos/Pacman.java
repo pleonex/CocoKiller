@@ -19,6 +19,7 @@
 package modelos;
 
 import controladores.Direccion;
+import controladores.Mando;
 import controladores.MovPacman;
 import java.awt.image.BufferedImage;
 
@@ -30,8 +31,9 @@ public class Pacman extends Personaje {
     private int puntos;
         
     public Pacman(final Punto posIni, final Direccion direccion, final int veloc,
-            final int vidas, final BufferedImage[] imgs, final Escenario escenario) {
-        super(new MovPacman(direccion), veloc, vidas, posIni, imgs, escenario);
+            final int vidas, final BufferedImage[] imgs, final Escenario escenario,
+            final Mando mando) {
+        super(new MovPacman(direccion, mando), veloc, vidas, posIni, imgs, escenario);
         
         this.movPacman = (MovPacman)this.getMovimiento();
         this.movPacman.setPacman(this);

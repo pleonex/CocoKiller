@@ -32,13 +32,15 @@ public class Escenario {
     private final BufferedImage mapa;
     
     private int foodBalls;
-    private Pacman pacman;
-    private final List<Personaje> fantasmas;
+    private final List<Pacman> pacmans;
+    private final List<Fantasma> fantasmas;
     
     public Escenario(BufferedImage imgMapa, BufferedImage imgColi) {
         this.mapa = imgMapa;
         this.colisiones = new Bloque[imgColi.getWidth()][imgColi.getHeight()];
         loadColisiones(imgColi);
+        
+        this.pacmans   = new ArrayList<>();
         this.fantasmas = new ArrayList<>();
     }
     
@@ -81,20 +83,20 @@ public class Escenario {
         return this.colisiones[x][y];
     }
     
-    public Pacman getPacman() {
-        return this.pacman;
+    public Pacman[] getPacmans() {
+        return this.pacmans.toArray(new Pacman[0]);
     }
     
-    public void setPacman(final Pacman pacman) {
-        this.pacman = pacman;
+    public void addPacman(final Pacman pacman) {
+        this.pacmans.add(pacman);
     }
     
-    public void addFantasma(final Personaje fantasma) {
+    public void addFantasma(final Fantasma fantasma) {
         this.fantasmas.add(fantasma);
     }
     
-    public Personaje[] getFantasmas() {
-        return this.fantasmas.toArray(new Personaje[0]);
+    public Fantasma[] getFantasmas() {
+        return this.fantasmas.toArray(new Fantasma[0]);
     }
     
     public void clearBloque(final int x, final int y) {

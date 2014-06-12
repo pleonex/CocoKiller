@@ -23,6 +23,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import modelos.Bloque;
@@ -41,7 +43,6 @@ public class GamePanel extends javax.swing.JPanel {
     
     private final Timer tmrPainter;
     private Escenario escenario;
-    private Pacman pacman;
     
     public GamePanel(final JFrame container) {
         initComponents();
@@ -56,8 +57,11 @@ public class GamePanel extends javax.swing.JPanel {
     public void nuevoJuego() {
         this.escenario = new Escenario(Configuracion.getMapImg(0), Configuracion.getColiImg(0));
         
-        this.pacman = PersonajeFactory.CreaPacman1(this.escenario);
-        this.pacman.start();
+        Pacman pacman1 = PersonajeFactory.CreaPacman1(this.escenario);
+        pacman1.start();
+        
+        Pacman pacman2 = PersonajeFactory.CreaPacman2(this.escenario);
+        pacman2.start();      
         
         Personaje fantasma = PersonajeFactory.CreaFantasma(escenario, 0);
         fantasma.start();
@@ -89,13 +93,14 @@ public class GamePanel extends javax.swing.JPanel {
         // Dibuja elementos extras
         this.paintExtraElements(g);
         
-        // Dibuja a Pacman
-        g.drawImage(
-                this.pacman.getCurrentImage(),
-                this.pacman.getPosicion().getX(),
-                this.pacman.getPosicion().getY(),
-                this
-        );
+        // Dibuja a los Pacman
+        for (Pacman p : this.escenario.getPacmans())
+            g.drawImage(
+                    p.getCurrentImage(),
+                    p.getPosicion().getX(),
+                    p.getPosicion().getY(),
+                    this
+            );
         
         // Dibuja los fantasmas
         for (Personaje fantasma : this.escenario.getFantasmas()) {
@@ -169,8 +174,9 @@ public class GamePanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        if (this.pacman.getMovimiento() instanceof MovPacman)
-            ((MovPacman)this.pacman.getMovimiento()).keyPressed(evt.getKeyCode());
+        for (Pacman pacman : this.escenario.getPacmans())
+            if (pacman.getMovimiento() instanceof MovPacman)
+                ((MovPacman)pacman.getMovimiento()).keyPressed(evt.getKeyCode());
     }//GEN-LAST:event_formKeyPressed
 
     private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
