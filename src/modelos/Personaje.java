@@ -34,17 +34,20 @@ public abstract class Personaje {
     
     private BufferedImage currImg;
     
+    private BufferedImage defaultImg;
+    
     private int vidas;
     
     private Punto posicion;    
     
     public Personaje(final MovPersonaje movPer, final int numVidas,
-            final Punto posIni, final BufferedImage[] imgs, final Escenario escenario) {
+            final Punto posIni, final BufferedImage defaultImg, final Escenario escenario) {
         this.movPer  = movPer;
-        this.currImg = imgs[0];
         this.vidas   = numVidas;
         this.posicion  = posIni;
         this.escenario = escenario;
+        this.defaultImg = defaultImg;
+        this.currImg = defaultImg;
     }
     
     public int getVidas() {
@@ -73,11 +76,15 @@ public abstract class Personaje {
     }
     
     public int getWidth() {
-        return this.currImg.getWidth();
+        return this.defaultImg.getWidth();
     }
     
     public int getHeight() {
-        return this.currImg.getHeight();
+        return this.defaultImg.getHeight();
+    }
+    
+    public BufferedImage getDefaultImage() {
+        return this.defaultImg;
     }
     
     public BufferedImage getCurrentImage() {

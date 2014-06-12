@@ -32,7 +32,7 @@ public class Fantasma extends Personaje {
     
     public Fantasma(final Punto posIni, final int vidas,
             final BufferedImage[] imgs, final Escenario escenario) {
-        super(new MovFantasma(), vidas, posIni, imgs, escenario);
+        super(new MovFantasma(), vidas, posIni, imgs[0], escenario);
         
         this.movFantasma = (MovFantasma)this.getMovimiento();
         this.movFantasma.setFantasma(this);
