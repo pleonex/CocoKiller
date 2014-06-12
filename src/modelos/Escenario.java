@@ -29,6 +29,8 @@ public class Escenario {
     private final Bloque[][] colisiones;
     private final BufferedImage mapa;
     
+    private Personaje pacman;
+    
     public Escenario(BufferedImage imgMapa, BufferedImage imgColi) {
         this.mapa = imgMapa;
         this.colisiones = LoadColisiones(imgColi);
@@ -71,6 +73,14 @@ public class Escenario {
     
     public Bloque getBloque(final int x, final int y) {
         return this.colisiones[x][y];
+    }
+    
+    public Personaje getPacman() {
+        return this.pacman;
+    }
+    
+    public void setPacman(final Personaje pacman) {
+        this.pacman = pacman;
     }
     
     public void clearBloque(final int x, final int y) {

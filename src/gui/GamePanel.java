@@ -23,6 +23,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import modelos.Bloque;
 import modelos.Escenario;
@@ -33,6 +35,8 @@ import modelos.PersonajeFactory;
  * Contenedor del juego.
  */
 public class GamePanel extends javax.swing.JPanel {
+    private final JFrame container;
+    
     private long fpsTime;
     private int fps;
     private int fpsCounter;
@@ -40,25 +44,31 @@ public class GamePanel extends javax.swing.JPanel {
     private Escenario escenario;
     private Personaje pacman;
     
-    public GamePanel() {
+    public GamePanel(JFrame container) {
         initComponents();
+        this.container = container;
     }
     
     public void nuevoJuego() {
         this.escenario = new Escenario(Configuracion.getMapImg(0), Configuracion.getColiImg(0));
         
         this.pacman = PersonajeFactory.CreaPacman1(this.escenario);
+        this.escenario.setPacman(this.pacman);
         this.pacman.start();
         
         // 60 fps
         new Timer(17, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                repaint();
+                container.repaint();
             }
         }).start();       
     }
 
+    public Escenario getEscenario() {
+        return this.escenario;
+    }
+    
     @Override
     protected void paintComponent(final Graphics g) {
         // Borra todo y pinta el fondo
