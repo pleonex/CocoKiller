@@ -18,6 +18,7 @@
 
 package modelos;
 
+import controladores.Direccion;
 import controladores.MovPacman;
 import gui.Configuracion;
 
@@ -27,8 +28,8 @@ import gui.Configuracion;
 public class PersonajeFactory {
     public static Personaje CreaPacman1() {
         return new Personaje(
-                new MovPacman(),
-                100,
+                new MovPacman(Direccion.DERECHA),
+                20,
                 3,
                 new Punto(0, 0),
                 Configuracion.getPacmanImgs()

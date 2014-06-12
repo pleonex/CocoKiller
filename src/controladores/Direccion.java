@@ -18,37 +18,23 @@
 
 package controladores;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import modelos.Personaje;
-
 /**
  *
  */
-public abstract class MovPersonaje implements ActionListener {
-    private Personaje personaje;
-    private Direccion direccion;
- 
-    public void setPersonaje(final Personaje personaje) {
-        this.personaje = personaje;
-    }
+public enum Direccion {
+    ARRIBA,
+    ABAJO,
+    DERECHA,
+    IZQUIERDA;
     
-    protected Personaje getPersonaje() {
-        return this.personaje;
+    public static Direccion Aleatoria() {
+        switch ((int)Math.round(Math.random() * 3)) {
+            case 0: return ARRIBA;
+            case 1: return ABAJO;
+            case 2: return DERECHA;
+            case 3: return IZQUIERDA;
+        }
+        
+        return null;
     }
-    
-    protected Direccion getDireccion() {
-        return this.direccion;
-    }
-    
-    protected void setDireccion(final Direccion direccion) {
-        this.direccion = direccion;
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        this.mueve();
-    }
-    
-    protected abstract void mueve();
 }

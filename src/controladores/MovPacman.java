@@ -18,11 +18,31 @@
 
 package controladores;
 
+import modelos.Punto;
+
 /**
  *
  */
 public class MovPacman extends MovPersonaje {
+    public MovPacman(final Direccion direccion) {
+        this.setDireccion(direccion);
+    }
+    
     @Override
     protected void mueve() {
+        int dx = 0;
+        int dy = 0;
+        switch (this.getDireccion()) {
+            case ABAJO: dx = 0; dy = 1; break;
+            case ARRIBA: dx = 0; dy = -1; break;
+            case DERECHA: dx = 1; dy = 0; break;
+            case IZQUIERDA: dx = -1; dy = 0; break;
+        }
+        
+        Punto sigPos = this.getPersonaje().getPosicion().offset(dx, dy);
+        // TODO: Comprueba que el siguiente movimiento sea posible
+        
+        // Muévete
+        this.getPersonaje().setPosicion(sigPos);
     }
 }

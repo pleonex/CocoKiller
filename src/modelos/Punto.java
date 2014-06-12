@@ -38,4 +38,8 @@ public class Punto {
     public int getY() {
         return this.y;
     }
+    
+    public Punto offset(final int dx, final int dy) {
+        return new Punto(this.getX() + dx, this.getY() + dy);
+    }
 }
