@@ -22,6 +22,7 @@ import controladores.MovFantasma;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 /**
  *
@@ -31,8 +32,8 @@ public class Fantasma extends Personaje {
     private final EfectoBasico efectoTick;
     
     public Fantasma(final Punto posIni, final int vidas,
-            final BufferedImage[] imgs, final Escenario escenario) {
-        super(new MovFantasma(), vidas, posIni, imgs[0], escenario);
+            final Map<String, BufferedImage[]> imgs, final Escenario escenario) {
+        super(new MovFantasma(), vidas, posIni, imgs.get("DERECHA")[0], escenario);
         
         this.movFantasma = (MovFantasma)this.getMovimiento();
         this.movFantasma.setFantasma(this);
@@ -41,7 +42,6 @@ public class Fantasma extends Personaje {
             @Override
             public void actionPerformed(ActionEvent e) {
                 super.actionPerformed(e);
-                setCurrentImage(this.getCurrentImage());
             }
         };
     }

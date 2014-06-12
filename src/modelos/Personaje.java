@@ -21,8 +21,10 @@ package modelos;
 import controladores.Direccion;
 import controladores.MovPersonaje;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 /**
  * Representa a un personaje en el juego.
@@ -120,5 +122,22 @@ public abstract class Personaje {
         
         this.movPer.setDireccion(this.inicioDir);
         this.setPosicion(this.inicioPos);
+    }
+    
+    public abstract class EfectoBasico implements ActionListener {
+        private final Map<String, BufferedImage[]> images;
+        private String dir;
+        private int idx;
+
+        public EfectoBasico(final Map<String, BufferedImage[]> images) {
+            this.images = images;
+        }
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dir = getMovimiento().getDireccion().name();
+            this.idx = (this.idx + 1 >= this.images.get(dir).length) ? 0 : this.idx + 1;
+            setCurrentImage(this.images.get(dir)[this.idx]);
+        }
     }
 }

@@ -18,22 +18,25 @@
 
 package gui;
 
+import controladores.Direccion;
 import controladores.Mando;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.imageio.ImageIO;
 
 /**
  *
  */
 public class Configuracion {
-    private static List<BufferedImage> Pacman1Imgs;
-    private static List<BufferedImage> Pacman2Imgs;
-    private static List<BufferedImage> FantasmaImgs0;
+    private static Map<String, BufferedImage[]> Pacman1Imgs;
+    private static Map<String, BufferedImage[]> Pacman2Imgs;
+    private static Map<String, BufferedImage[]> FantasmaImgs0;
     private static List<BufferedImage[]> MapImgs;
     
     public static void Inicializa(final String resPath) {
@@ -41,11 +44,24 @@ public class Configuracion {
         File currFile;
         try {
             // Load pacman images
-            Pacman1Imgs = LoadImages(resPath, "pacman", ".png");
-            Pacman2Imgs = LoadImages(resPath, "pacmana", ".png");
+            Pacman1Imgs = new HashMap<>(4);
+            Pacman1Imgs.put("DERECHA", LoadImages(resPath, "pacman_D"));
+            Pacman1Imgs.put("IZQUIERDA", LoadImages(resPath, "pacman_I"));
+            Pacman1Imgs.put("ABAJO", LoadImages(resPath, "pacman_AB"));
+            Pacman1Imgs.put("ARRIBA", LoadImages(resPath, "pacman_AR"));
+
+            Pacman2Imgs = new HashMap<>(4);
+            Pacman2Imgs.put("DERECHA", LoadImages(resPath, "pacmana_D"));
+            Pacman2Imgs.put("IZQUIERDA", LoadImages(resPath, "pacmana_I"));
+            Pacman2Imgs.put("ABAJO", LoadImages(resPath, "pacmana_AB"));
+            Pacman2Imgs.put("ARRIBA", LoadImages(resPath, "pacmana_AR"));
             
             // Load ghosts
-            FantasmaImgs0 = LoadImages(resPath, "fantasma0_D", ".png");
+            FantasmaImgs0 = new HashMap<>(4);
+            FantasmaImgs0.put("DERECHA", LoadImages(resPath, "fantasma0_D"));
+            FantasmaImgs0.put("IZQUIERDA", LoadImages(resPath, "fantasma0_I"));
+            FantasmaImgs0.put("ABAJO", LoadImages(resPath, "fantasma0_AB"));
+            FantasmaImgs0.put("ARRIBA", LoadImages(resPath, "fantasma0_AR"));
 
             // Load map images
             i = 0;
@@ -63,29 +79,29 @@ public class Configuracion {
         }
     }
     
-    private static List<BufferedImage> LoadImages(final String resPath, 
-                                    final String preStr, final String postStr) {
+    private static BufferedImage[] LoadImages(final String resPath, 
+                                    final String preStr) {
         int i = 0;
         List<BufferedImage> imgs = new ArrayList<>();
-        File currFile = new File(resPath, preStr + i + postStr);        
+        File currFile = new File(resPath, preStr + i + ".png");        
         try {
             while (currFile.exists()) {
                 imgs.add(ImageIO.read(currFile));
-                currFile = new File(resPath, preStr + (++i) + postStr);
+                currFile = new File(resPath, preStr + (++i) + ".png");
             }
         } catch(IOException ex) {
-            
+            System.err.println("Error al cargar imagen");
         }
         
-        return imgs;
+        return imgs.toArray(new BufferedImage[0]);
     }
     
-    public static BufferedImage[] getPacman1Imgs() {
-        return Pacman1Imgs.toArray(new BufferedImage[0]);
+    public static Map<String, BufferedImage[]> getPacman1Imgs() {
+        return Pacman1Imgs;
     }
  
-    public static BufferedImage[] getPacman2Imgs() {
-        return Pacman2Imgs.toArray(new BufferedImage[0]);
+    public static Map<String, BufferedImage[]> getPacman2Imgs() {
+        return Pacman2Imgs;
     }
     
     public static BufferedImage getMapImg(int level) {
@@ -96,9 +112,9 @@ public class Configuracion {
         return MapImgs.get(level)[1];
     }
     
-    public static BufferedImage[] getFantasmasImg(int tipo) {
+    public static Map<String, BufferedImage[]> getFantasmasImg(int tipo) {
         if (tipo == 0)
-            return FantasmaImgs0.toArray(new BufferedImage[0]);
+            return FantasmaImgs0;
         else
             return null;
     }

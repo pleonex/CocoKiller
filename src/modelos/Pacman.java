@@ -24,6 +24,7 @@ import controladores.MovPacman;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.Map;
 
 /**
  *
@@ -34,18 +35,17 @@ public class Pacman extends Personaje {
     private int puntos;
         
     public Pacman(final Punto posIni, final Direccion direccion, final int vidas,
-            final BufferedImage[] imgs, final Escenario escenario, final Mando mando) {
-        super(new MovPacman(direccion, mando), vidas, posIni, imgs[1], escenario);
+            final Map<String, BufferedImage[]> imgs, final Escenario escenario, final Mando mando) {
+        super(new MovPacman(direccion, mando), vidas, posIni, imgs.get("DERECHA")[1], escenario);
         
         this.movPacman = (MovPacman)this.getMovimiento();
         this.movPacman.setPacman(this);
         this.puntos = 0;
         
-        this.efectoTick = new EfectoBasico(imgs) {
+        this.efectoTick = new Personaje.EfectoBasico(imgs) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 super.actionPerformed(e);
-                setCurrentImage(this.getCurrentImage());
             }
         };
     }
