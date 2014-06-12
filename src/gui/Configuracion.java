@@ -18,31 +18,58 @@
 
 package gui;
 
-import java.awt.Image;
-import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 
 /**
  *
  */
 public class Configuracion {
-    private static List<Image> PacmanImgs;
+    private static List<BufferedImage> PacmanImgs;
+    private static List<BufferedImage[]> MapImgs;
     
     public static void Inicializa(final String resPath) {
-        // Load pacman images
-        int i = 0;
-        PacmanImgs = new ArrayList<>();
-        File currFile = new File(resPath, "pacman" + i + ".png");
-        while (currFile.exists()) {
-            PacmanImgs.add(Toolkit.getDefaultToolkit().createImage(
-                                    currFile.getAbsolutePath()));
-            currFile = new File(resPath, "pacman" + (++i) + ".png");
+        int i;
+        File currFile;
+        try {
+            // Load pacman images
+            i = 0;
+            PacmanImgs = new ArrayList<>();
+            currFile = new File(resPath, "pacman" + i + ".png");
+            while (currFile.exists()) {
+                PacmanImgs.add(ImageIO.read(currFile));
+                currFile = new File(resPath, "pacman" + (++i) + ".png");
+            }
+
+            // Load map images
+            i = 0;
+            MapImgs = new ArrayList<>();
+            currFile = new File(resPath, "mapa" + i + ".png");
+            while (currFile.exists()) {
+                MapImgs.add(new BufferedImage[] { 
+                    ImageIO.read(currFile),
+                    ImageIO.read(new File(resPath, "coli" + i + ".png"))
+                });
+                currFile = new File(resPath, "mapa" + (++i) + ".png");
+            }
+        } catch (IOException ex) {
+            
         }
     }
     
-    public static Image[] getPacmanImgs() {
-        return PacmanImgs.toArray(new Image[0]);
+    public static BufferedImage[] getPacmanImgs() {
+        return PacmanImgs.toArray(new BufferedImage[0]);
+    }
+    
+    public static BufferedImage getMapImg(int level) {
+        return MapImgs.get(level)[0];
+    }
+    
+    public static BufferedImage getColiImg(int level) {
+        return MapImgs.get(level)[1];
     }
 }

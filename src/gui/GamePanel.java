@@ -23,6 +23,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+import modelos.Escenario;
 import modelos.Personaje;
 import modelos.PersonajeFactory;
 
@@ -34,10 +35,13 @@ public class GamePanel extends javax.swing.JPanel {
     private int fps;
     private int fpsCounter;
     
+    private final Escenario escenario;
     private final Personaje pacman;
     
     public GamePanel() {
         initComponents();
+        
+        this.escenario = new Escenario(Configuracion.getMapImg(0), Configuracion.getColiImg(0));
         
         this.pacman = PersonajeFactory.CreaPacman1();
         this.pacman.start();
@@ -55,7 +59,11 @@ public class GamePanel extends javax.swing.JPanel {
     protected void paintComponent(final Graphics g) {
         // Borra todo y pinta el fondo
         super.paintComponent(g);
-                
+        
+        // Dibuja el mapa
+        g.drawImage(this.escenario.getMapa(), 0, 0, this);
+        
+        // Dibuja a Pacman
         g.drawImage(
                 this.pacman.getCurrentImage(),
                 this.pacman.getPosicion().getX(),

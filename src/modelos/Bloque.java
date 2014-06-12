@@ -18,21 +18,29 @@
 
 package modelos;
 
-import controladores.Direccion;
-import controladores.MovPacman;
-import gui.Configuracion;
+import java.awt.Color;
 
 /**
  *
  */
-public class PersonajeFactory {
-    public static Personaje CreaPacman1() {
-        return new Personaje(
-                new MovPacman(Direccion.DERECHA),
-                20,
-                3,
-                new Punto(5, 5),
-                Configuracion.getPacmanImgs()
-        );
+public enum Bloque {
+    VACIO,
+    COM_GRANDE,
+    COM_PEQUE,
+    ESCENARIO,
+    PUERTA,
+    PORTAL;
+    
+    public static Bloque FromColor(final Color color) {
+        switch (color.getRGB()) {
+            case 0xFF0000: return ESCENARIO;
+            case 0x000000: return VACIO;
+            case 0xFFFFFF: return COM_PEQUE;
+            case 0x0000FF: return COM_GRANDE;
+            case 0x00FF00: return PUERTA;
+            case 0xFFFF00: return PORTAL;
+        }
+        
+        return null;
     }
 }
