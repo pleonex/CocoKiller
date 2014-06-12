@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Benito Palacios Sánchez
+ * Copyright (C) 2014 benito
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -21,36 +21,37 @@ package gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import modelos.Escenario;
 import modelos.Punto;
 
 /**
  *
+ * @author benito
  */
-public class Contador extends javax.swing.JPanel {
-    private static final Punto POSICION = new Punto(10, 20);
-    private Escenario escenario;
+public class FPSCounter extends javax.swing.JPanel {
+    private static final Punto POSICION = new Punto(135, 10);
+    private GamePanel gamePanel;
+    
 
-    public Contador() {
+    public FPSCounter() {
         initComponents();
     }
 
-    public void setEscenario(final Escenario escenario) {
-        this.escenario = escenario;
+    public void setGamePanel(final GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
     }
     
     @Override
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         
-        if (this.escenario == null)
+        if (this.gamePanel == null)
             return;
         
-        int puntos = this.escenario.getPacman().getPuntos();
+        int fps = this.gamePanel.getFPS();
                 
         g.setColor(Color.white);
-        g.setFont(new Font("Courier New", Font.BOLD, 18));
-        g.drawString("Puntos: " + String.format("%04d", puntos), POSICION.getX(), POSICION.getY());
+        g.setFont(new Font("Courier New", Font.BOLD, 10));
+        g.drawString("FPS: " + String.format("%02d", fps), POSICION.getX(), POSICION.getY());
     }
     
     @SuppressWarnings("unchecked")
@@ -58,7 +59,6 @@ public class Contador extends javax.swing.JPanel {
     private void initComponents() {
 
         setBackground(new java.awt.Color(0, 0, 0));
-        setPreferredSize(new java.awt.Dimension(180, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

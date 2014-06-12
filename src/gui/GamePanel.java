@@ -41,12 +41,19 @@ public class GamePanel extends javax.swing.JPanel {
     private int fps;
     private int fpsCounter;
     
+    private Timer tmrPainter;
     private Escenario escenario;
     private Personaje pacman;
     
-    public GamePanel(JFrame container) {
+    public GamePanel(final JFrame container) {
         initComponents();
         this.container = container;
+        this.tmrPainter = new Timer(17, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                container.repaint();
+            }
+        });
     }
     
     public void nuevoJuego() {
@@ -57,16 +64,15 @@ public class GamePanel extends javax.swing.JPanel {
         this.pacman.start();
         
         // 60 fps
-        new Timer(17, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                container.repaint();
-            }
-        }).start();       
+        this.tmrPainter.restart();
     }
 
     public Escenario getEscenario() {
         return this.escenario;
+    }
+    
+    public int getFPS() {
+        return this.fps;
     }
     
     @Override
@@ -92,9 +98,7 @@ public class GamePanel extends javax.swing.JPanel {
                 this
         );
         
-        // Pintamos los FPS en la esquina
-        g.setColor(Color.white);
-        g.drawString("FPS: " + this.fps, 250, 100);
+        // Calcula los FPS
         this.fpsCounter++;
         if (System.nanoTime() - this.fpsTime > 1e9) {
             this.fps = this.fpsCounter;
