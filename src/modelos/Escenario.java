@@ -29,15 +29,16 @@ public class Escenario {
     private final Bloque[][] colisiones;
     private final BufferedImage mapa;
     
+    private int foodBalls;
     private Personaje pacman;
     
     public Escenario(BufferedImage imgMapa, BufferedImage imgColi) {
         this.mapa = imgMapa;
-        this.colisiones = LoadColisiones(imgColi);
+        this.colisiones = new Bloque[imgColi.getWidth()][imgColi.getHeight()];
+        loadColisiones(imgColi);
     }
     
-    private static Bloque[][] LoadColisiones(BufferedImage imgColi) {
-        Bloque[][] colisiones = new Bloque[imgColi.getWidth()][imgColi.getHeight()];
+    private void loadColisiones(BufferedImage imgColi) {
         byte[] pixels = ((DataBufferByte)imgColi.getRaster().getDataBuffer()).getData();
         boolean hasAlpha = imgColi.getAlphaRaster() != null;
         int bpp = hasAlpha ? 4 : 3;   // bytes per pixel
@@ -52,11 +53,12 @@ public class Escenario {
                         pixels[index + 0] & 0xFF,
                         hasAlpha ? (pixels[index - 1] & 0xFF) : 255
                 );
-                colisiones[x][y] = Bloque.FromColor(color);
+                this.colisiones[x][y] = Bloque.FromColor(color);
+                if (this.colisiones[x][y] == Bloque.COM_PEQUE ||
+                    this.colisiones[x][y] == Bloque.COM_GRANDE)
+                        this.foodBalls++;
             }
         }
-        
-        return colisiones;
     }
     
     public BufferedImage getMapa() {
@@ -84,7 +86,15 @@ public class Escenario {
     }
     
     public void clearBloque(final int x, final int y) {
+        if (this.colisiones[x][y] == Bloque.COM_GRANDE ||
+            this.colisiones[x][y] == Bloque.COM_PEQUE)
+                this.foodBalls--;
+        
         this.colisiones[x][y] = Bloque.VACIO;
+        
+        if (foodBalls == 0) {
+            javax.swing.JOptionPane.showMessageDialog(null, "¡GANASTE!");
+        }
     }
     
     public boolean isPosicionPermitida(final Punto posicion, final int width,
