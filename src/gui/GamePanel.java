@@ -39,7 +39,7 @@ public class GamePanel extends javax.swing.JPanel {
     private int fps;
     private int fpsCounter;
     
-    private Timer tmrPainter;
+    private final Timer tmrPainter;
     private Escenario escenario;
     private Pacman pacman;
     
@@ -57,11 +57,9 @@ public class GamePanel extends javax.swing.JPanel {
         this.escenario = new Escenario(Configuracion.getMapImg(0), Configuracion.getColiImg(0));
         
         this.pacman = PersonajeFactory.CreaPacman1(this.escenario);
-        this.escenario.setPacman(this.pacman);
         this.pacman.start();
         
         Personaje fantasma = PersonajeFactory.CreaFantasma(escenario, 0);
-        this.escenario.addFantasma(fantasma);
         fantasma.start();
         
         // 60 fps

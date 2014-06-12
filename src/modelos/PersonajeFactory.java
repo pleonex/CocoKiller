@@ -27,7 +27,7 @@ import gui.Configuracion;
  */
 public class PersonajeFactory {
     public static Pacman CreaPacman1(final Escenario escenario) {
-        return new Pacman(
+        Pacman p = new Pacman(
                 new Punto(5, 4),
                 Direccion.DERECHA,
                 20,
@@ -35,15 +35,19 @@ public class PersonajeFactory {
                 Configuracion.getPacmanImgs(),
                 escenario
         );
+        escenario.setPacman(p);
+        return p;
     }
     
     public static Fantasma CreaFantasma(final Escenario escenario, int tipo) {
-        return new Fantasma(
+        Fantasma f = new Fantasma(
                 new Punto(68, 84),
                 21,
                 1,
                 Configuracion.getFantasmasImg(tipo),
                 escenario
         );
+        escenario.addFantasma(f);
+        return f;
     }
 }

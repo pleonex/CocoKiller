@@ -82,6 +82,14 @@ public class Personaje {
         );
     }
     
+    public int getWidth() {
+        return this.currImg.getWidth();
+    }
+    
+    public int getHeight() {
+        return this.currImg.getHeight();
+    }
+    
     public BufferedImage getCurrentImage() {
         return this.currImg;
     }

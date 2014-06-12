@@ -20,6 +20,7 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import modelos.Bloque;
 import modelos.Escenario;
 import modelos.Personaje;
 import modelos.Punto;
@@ -54,7 +55,7 @@ public abstract class MovPersonaje implements ActionListener {
     }
     
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {       
         Punto sigPos = this.getIncrementPosicion();
         
         // Comprueba que el siguiente movimiento sea posible.
@@ -63,10 +64,26 @@ public abstract class MovPersonaje implements ActionListener {
         // Si el movimiento es inválido, pregunta por una posición buena.
         if (!valida)
             sigPos = this.getSiguientePosicion();
-                
-        // Muévete si puedes
-        if (sigPos != null)
-            this.personaje.setPosicion(sigPos);
+        
+        // Si no se puede mover notificamos y salimos
+        if (sigPos == null) {
+            this.enCambio();
+            return;
+        }
+        
+        // Si la posición es la de un portal, salir por el otro lado
+        int latIzq = sigPos.getX();
+        int latDer = sigPos.getX() + this.personaje.getWidth();
+        if (this.getEscenario().getBloque(latIzq, sigPos.getY()) == Bloque.PORTAL) {
+            int xExtremo = this.getEscenario().getWidth() - this.personaje.getWidth() - 1;
+            sigPos = new Punto(xExtremo, sigPos.getY());
+        } else if (this.getEscenario().getBloque(latDer, sigPos.getY()) == Bloque.PORTAL) {
+            int xExtremo = 0;
+            sigPos = new Punto(xExtremo, sigPos.getY());
+        }
+        
+        // Muévete
+        this.personaje.setPosicion(sigPos);
         
         // Avisa del cambio
         this.enCambio();
