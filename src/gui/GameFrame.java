@@ -25,6 +25,7 @@ public class GameFrame extends javax.swing.JFrame {
 
     public GameFrame() {
         initComponents();
+        this.gamePanel1.requestFocus();
     }
 
     @SuppressWarnings("unchecked")
