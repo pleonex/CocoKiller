@@ -55,7 +55,7 @@ public class Contador extends javax.swing.JPanel {
             
             g.setColor(Color.white);
             g.setFont(new Font("Courier New", Font.BOLD, 18));
-            g.drawString("Puntos" + (i + 1) + ": " + puntos, POSICION.getX(), y);
+            g.drawString("Jugador " + (i + 1) + ": " + puntos, POSICION.getX(), y);
             i++;
         }
     }
