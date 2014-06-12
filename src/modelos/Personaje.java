@@ -19,9 +19,9 @@
 package modelos;
 
 import controladores.MovPersonaje;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import javax.swing.Timer;
 
 /**
@@ -38,7 +38,7 @@ public class Personaje {
     
     private final Escenario escenario;
     
-    private Image currImg;
+    private BufferedImage currImg;
     
     private int vidas;
     
@@ -46,13 +46,14 @@ public class Personaje {
     
     
     public Personaje(final MovPersonaje movPer, final int veloc,
-            final int numVidas, final Punto posIni, final Image[] imgs,
+            final int numVidas, final Punto posIni, final BufferedImage[] imgs,
             final Escenario escenario) {
         movPer.setPersonaje(this);
-        this.movPer = movPer;
-        this.tmrAni = new Timer(ANI_PERIOD, new AnimacionTask(imgs));
-        this.tmrMov = new Timer(veloc, movPer);
-        this.vidas  = numVidas;
+        this.movPer  = movPer;
+        this.tmrMov  = new Timer(veloc, movPer);
+        this.tmrAni  = new Timer(ANI_PERIOD, new AnimacionTask(imgs));
+        this.currImg = imgs[0];
+        this.vidas   = numVidas;
         this.posicion  = posIni;
         this.escenario = escenario;
     }
@@ -73,11 +74,11 @@ public class Personaje {
         this.posicion = pos;
     }
     
-    public Image getCurrentImage() {
+    public BufferedImage getCurrentImage() {
         return this.currImg;
     }
     
-    private void setCurrentImage(final Image img) {
+    private void setCurrentImage(final BufferedImage img) {
         this.currImg = img;
     }
     
@@ -100,10 +101,10 @@ public class Personaje {
     }
     
     private class AnimacionTask implements ActionListener {
-        private final Image[] images;
+        private final BufferedImage[] images;
         private int idx;
         
-        public AnimacionTask(final Image[] images) {
+        public AnimacionTask(final BufferedImage[] images) {
             this.images = images;
         }
         

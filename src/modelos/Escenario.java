@@ -60,4 +60,16 @@ public class Escenario {
     public Image getMapa() {
         return this.mapa;
     }
+    
+    public boolean isPosicionPermitida(final Punto posicion, final int width,
+            final int height) {
+       
+        boolean permitido = true; 
+        for (int x = 0; x < width && permitido; x++)
+            for (int y = 0; y < height && permitido; y++)
+                if (this.colisiones[posicion.getX() + x][posicion.getY() + y] == Bloque.ESCENARIO)
+                    permitido = false;
+        
+        return permitido;
+    }
 }

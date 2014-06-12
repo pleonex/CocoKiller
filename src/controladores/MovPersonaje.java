@@ -21,6 +21,7 @@ package controladores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import modelos.Personaje;
+import modelos.Punto;
 
 /**
  *
@@ -29,6 +30,10 @@ public abstract class MovPersonaje implements ActionListener {
     private Personaje personaje;
     private Direccion direccion;
  
+    public MovPersonaje(final Direccion direccion) {
+        this.direccion = direccion;
+    }
+    
     public void setPersonaje(final Personaje personaje) {
         this.personaje = personaje;
     }
@@ -47,8 +52,34 @@ public abstract class MovPersonaje implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.mueve();
+        // Calcula el desplazamiento
+        int dx = 0;
+        int dy = 0;
+        switch (this.getDireccion()) {
+            case ABAJO: dx = 0; dy = 1; break;
+            case ARRIBA: dx = 0; dy = -1; break;
+            case DERECHA: dx = 1; dy = 0; break;
+            case IZQUIERDA: dx = -1; dy = 0; break;
+        }
+        
+        // A partir de este obtiene la siguiente posición.
+        Punto sigPos = this.getPersonaje().getPosicion().offset(dx, dy);
+        
+        // Comprueba que el siguiente movimiento sea posible.
+        boolean valida = this.personaje.getEscenario().isPosicionPermitida(
+                sigPos,
+                this.personaje.getCurrentImage().getWidth(),
+                this.personaje.getCurrentImage().getHeight()
+        );
+        
+        // Si el movimiento es inválido, pregunta por una posición buena.
+        if (!valida)
+            sigPos = this.getSiguientePosicion();
+        
+        // Muévete si puedes
+        if (sigPos != null)
+            this.getPersonaje().setPosicion(sigPos);
     }
     
-    protected abstract void mueve();
+    protected abstract Punto getSiguientePosicion();
 }

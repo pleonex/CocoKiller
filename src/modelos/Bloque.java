@@ -33,12 +33,12 @@ public enum Bloque {
     
     public static Bloque FromColor(final Color color) {
         switch (color.getRGB()) {
-            case 0xFF0000: return ESCENARIO;
-            case 0x000000: return VACIO;
-            case 0xFFFFFF: return COM_PEQUE;
-            case 0x0000FF: return COM_GRANDE;
-            case 0x00FF00: return PUERTA;
-            case 0xFFFF00: return PORTAL;
+            case 0xFFFF0000: return ESCENARIO;
+            case 0xFF000000: return VACIO;
+            case 0xFFFFFFFF: return COM_PEQUE;
+            case 0xFF0000FF: return COM_GRANDE;
+            case 0xFF00FF00: return PUERTA;
+            case 0xFFFFFF00: return PORTAL;
         }
         
         return null;
