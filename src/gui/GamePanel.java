@@ -27,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import modelos.Bloque;
 import modelos.Escenario;
+import modelos.Pacman;
 import modelos.Personaje;
 import modelos.PersonajeFactory;
 
@@ -40,7 +41,7 @@ public class GamePanel extends javax.swing.JPanel {
     
     private Timer tmrPainter;
     private Escenario escenario;
-    private Personaje pacman;
+    private Pacman pacman;
     
     public GamePanel(final JFrame container) {
         initComponents();

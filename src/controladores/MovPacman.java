@@ -20,6 +20,7 @@ package controladores;
 
 import java.awt.event.KeyEvent;
 import modelos.Bloque;
+import modelos.Pacman;
 import modelos.Personaje;
 import modelos.Punto;
 
@@ -34,8 +35,15 @@ public class MovPacman extends MovPersonaje {
     private static final int PUNTOS_COMIDA_PEQUE = 10;
     private static final int PUNTOS_COMIDA_GRANDE = 100;
     
+    private Pacman pacman;
+    
     public MovPacman(final Direccion direccion) {
         super(direccion);
+    }
+    
+    public void setPacman(final Pacman pacman) {
+        this.pacman = pacman;
+        this.setPersonaje(pacman);
     }
     
     public void keyPressed(int keyCode) {
@@ -58,15 +66,15 @@ public class MovPacman extends MovPersonaje {
     protected void enCambio() {
         this.checkCambioDireccion();
         
-        for (int x = 0; x < this.getPersonaje().getCurrentImage().getWidth(); x++) {
-            for (int y = 0; y < this.getPersonaje().getCurrentImage().getHeight(); y++) {
-                this.checkComida(this.getPersonaje().getPosicion().offset(x, y));
+        for (int x = 0; x < this.pacman.getCurrentImage().getWidth(); x++) {
+            for (int y = 0; y < this.pacman.getCurrentImage().getHeight(); y++) {
+                this.checkComida(this.pacman.getPosicion().offset(x, y));
             }
         }
         
         // Check intersection with ghosts
         for (Personaje flan : this.getEscenario().getFantasmas()) {
-            if (!flan.getRectangle().intersects(this.getPersonaje().getRectangle()))
+            if (!flan.getRectangle().intersects(this.pacman.getRectangle()))
                 continue;
             
             // Perdiste
@@ -92,12 +100,12 @@ public class MovPacman extends MovPersonaje {
         Bloque bloque = this.getEscenario().getBloque(pos.getX(), pos.getY());
         switch (bloque) {
             case COM_PEQUE:
-                this.getPersonaje().incrementPuntos(PUNTOS_COMIDA_PEQUE);
+                this.pacman.incrementPuntos(PUNTOS_COMIDA_PEQUE);
                 this.getEscenario().clearBloque(pos.getX(), pos.getY());
                 break;
                 
             case COM_GRANDE:
-                this.getPersonaje().incrementPuntos(PUNTOS_COMIDA_GRANDE);
+                this.pacman.incrementPuntos(PUNTOS_COMIDA_GRANDE);
                 this.getEscenario().clearBloque(pos.getX(), pos.getY());
                 break;
         }

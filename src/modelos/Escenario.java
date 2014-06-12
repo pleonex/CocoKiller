@@ -32,8 +32,8 @@ public class Escenario {
     private final BufferedImage mapa;
     
     private int foodBalls;
-    private Personaje pacman;
-    private List<Personaje> fantasmas;
+    private Pacman pacman;
+    private final List<Personaje> fantasmas;
     
     public Escenario(BufferedImage imgMapa, BufferedImage imgColi) {
         this.mapa = imgMapa;
@@ -81,11 +81,11 @@ public class Escenario {
         return this.colisiones[x][y];
     }
     
-    public Personaje getPacman() {
+    public Pacman getPacman() {
         return this.pacman;
     }
     
-    public void setPacman(final Personaje pacman) {
+    public void setPacman(final Pacman pacman) {
         this.pacman = pacman;
     }
     

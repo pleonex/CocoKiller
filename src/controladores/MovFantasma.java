@@ -18,15 +18,22 @@
 
 package controladores;
 
+import modelos.Fantasma;
 import modelos.Punto;
 
 /**
  *
  */
 public class MovFantasma extends MovPersonaje {
-
+    private Fantasma fantasma;
+    
     public MovFantasma() {
         super(Direccion.Aleatoria());
+    }
+    
+    public void setFantasma(final Fantasma fantasma) {
+        this.fantasma = fantasma;
+        this.setPersonaje(fantasma);
     }
     
     @Override

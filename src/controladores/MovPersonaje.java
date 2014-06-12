@@ -37,12 +37,8 @@ public abstract class MovPersonaje implements ActionListener {
         this.direccion = direccion;
     }
     
-    public void setPersonaje(final Personaje personaje) {
+    protected void setPersonaje(final Personaje personaje) {
         this.personaje = personaje;
-    }
-    
-    protected Personaje getPersonaje() {
-        return this.personaje;
     }
     
     protected Direccion getDireccion() {
@@ -70,7 +66,7 @@ public abstract class MovPersonaje implements ActionListener {
                 
         // Muévete si puedes
         if (sigPos != null)
-            this.getPersonaje().setPosicion(sigPos);
+            this.personaje.setPosicion(sigPos);
         
         // Avisa del cambio
         this.enCambio();
@@ -106,7 +102,7 @@ public abstract class MovPersonaje implements ActionListener {
         }
         
         // A partir de este obtiene la siguiente posición.
-        return this.getPersonaje().getPosicion().offset(dx, dy);       
+        return this.personaje.getPosicion().offset(dx, dy);       
     }
     
     protected abstract Punto getSiguientePosicion();

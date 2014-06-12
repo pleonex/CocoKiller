@@ -18,32 +18,20 @@
 
 package modelos;
 
-import controladores.Direccion;
 import controladores.MovFantasma;
-import gui.Configuracion;
+import java.awt.image.BufferedImage;
 
 /**
  *
  */
-public class PersonajeFactory {
-    public static Pacman CreaPacman1(final Escenario escenario) {
-        return new Pacman(
-                new Punto(5, 4),
-                Direccion.DERECHA,
-                20,
-                3,
-                Configuracion.getPacmanImgs(),
-                escenario
-        );
-    }
-    
-    public static Fantasma CreaFantasma(final Escenario escenario, int tipo) {
-        return new Fantasma(
-                new Punto(68, 84),
-                21,
-                1,
-                Configuracion.getFantasmasImg(tipo),
-                escenario
-        );
+public class Fantasma extends Personaje {
+    private final MovFantasma movFantasma;
+        
+    public Fantasma(final Punto posIni, final int veloc,
+            final int vidas, final BufferedImage[] imgs, final Escenario escenario) {
+        super(new MovFantasma(), veloc, vidas, posIni, imgs, escenario);
+        
+        this.movFantasma = (MovFantasma)this.getMovimiento();
+        this.movFantasma.setFantasma(this);
     }
 }

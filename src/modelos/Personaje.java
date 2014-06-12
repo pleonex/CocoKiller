@@ -43,15 +43,11 @@ public class Personaje {
     
     private int vidas;
     
-    private Punto posicion;
-    
-    private int puntos;
-    
+    private Punto posicion;    
     
     public Personaje(final MovPersonaje movPer, final int veloc,
             final int numVidas, final Punto posIni, final BufferedImage[] imgs,
             final Escenario escenario) {
-        movPer.setPersonaje(this);
         this.movPer  = movPer;
         this.tmrMov  = new Timer(veloc, movPer);
         this.tmrAni  = new Timer(ANI_PERIOD, new AnimacionTask(imgs));
@@ -102,14 +98,6 @@ public class Personaje {
         return this.movPer;
     }
     
-    public int getPuntos() {
-        return this.puntos;
-    }
-    
-    public void incrementPuntos(final int incr) {
-        this.puntos += incr;
-    }
-
     public void start() {
         this.tmrAni.start();
         this.tmrMov.start();
