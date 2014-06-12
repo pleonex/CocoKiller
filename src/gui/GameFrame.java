@@ -36,6 +36,7 @@ public class GameFrame extends javax.swing.JFrame {
         
         this.contador1.setEscenario(this.gamePanel1.getEscenario());
         this.fPSCounter1.setGamePanel(this.gamePanel1);
+        this.vidaCounter1.setEscenario(this.gamePanel1.getEscenario());
     }
 
     @SuppressWarnings("unchecked")
@@ -46,11 +47,10 @@ public class GameFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         fPSCounter1 = new gui.FPSCounter();
         contador1 = new gui.Contador();
+        vidaCounter1 = new gui.VidaCounter();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CocoKiller ~~ by Benito Palacios");
-
-        gamePanel1.setPreferredSize(new java.awt.Dimension(224, 248));
 
         javax.swing.GroupLayout gamePanel1Layout = new javax.swing.GroupLayout(gamePanel1);
         gamePanel1.setLayout(gamePanel1Layout);
@@ -83,8 +83,6 @@ public class GameFrame extends javax.swing.JFrame {
             .addGap(0, 15, Short.MAX_VALUE)
         );
 
-        contador1.setPreferredSize(new java.awt.Dimension(180, 60));
-
         javax.swing.GroupLayout contador1Layout = new javax.swing.GroupLayout(contador1);
         contador1.setLayout(contador1Layout);
         contador1Layout.setHorizontalGroup(
@@ -96,6 +94,17 @@ public class GameFrame extends javax.swing.JFrame {
             .addGap(0, 60, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout vidaCounter1Layout = new javax.swing.GroupLayout(vidaCounter1);
+        vidaCounter1.setLayout(vidaCounter1Layout);
+        vidaCounter1Layout.setHorizontalGroup(
+            vidaCounter1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 180, Short.MAX_VALUE)
+        );
+        vidaCounter1Layout.setVerticalGroup(
+            vidaCounter1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 60, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,12 +112,14 @@ public class GameFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(gamePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(contador1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(67, 67, 67))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(contador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, 0)
+                                .addComponent(vidaCounter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, 0))))
             .addComponent(fPSCounter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
@@ -120,7 +131,9 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(fPSCounter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(contador1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(vidaCounter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -174,5 +187,6 @@ public class GameFrame extends javax.swing.JFrame {
     private gui.FPSCounter fPSCounter1;
     private gui.GamePanel gamePanel1;
     private javax.swing.JButton jButton1;
+    private gui.VidaCounter vidaCounter1;
     // End of variables declaration//GEN-END:variables
 }

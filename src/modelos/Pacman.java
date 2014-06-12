@@ -35,7 +35,7 @@ public class Pacman extends Personaje {
         
     public Pacman(final Punto posIni, final Direccion direccion, final int vidas,
             final BufferedImage[] imgs, final Escenario escenario, final Mando mando) {
-        super(new MovPacman(direccion, mando), vidas, posIni, imgs[0], escenario);
+        super(new MovPacman(direccion, mando), vidas, posIni, imgs[1], escenario);
         
         this.movPacman = (MovPacman)this.getMovimiento();
         this.movPacman.setPacman(this);

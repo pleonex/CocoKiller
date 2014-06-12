@@ -42,6 +42,11 @@ public class GamePanel extends javax.swing.JPanel {
     private final Timer tmrPainter;
     private Escenario escenario;
     
+    public GamePanel() {
+        initComponents();
+        this.tmrPainter = null;
+    }
+    
     public GamePanel(final JFrame container) {
         initComponents();
         this.tmrPainter = new Timer(17, new ActionListener() {
@@ -151,6 +156,7 @@ public class GamePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         setBackground(new java.awt.Color(0, 0, 0));
+        setPreferredSize(new java.awt.Dimension(224, 248));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 formMouseEntered(evt);
@@ -166,15 +172,18 @@ public class GamePanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 224, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 248, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if (this.escenario == null)
+            return;
+        
         for (Pacman pacman : this.escenario.getPacmans())
             if (pacman.getMovimiento() instanceof MovPacman)
                 ((MovPacman)pacman.getMovimiento()).keyPressed(evt.getKeyCode());
