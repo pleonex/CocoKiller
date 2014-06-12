@@ -20,6 +20,7 @@ package controladores;
 
 import java.awt.event.KeyEvent;
 import modelos.Bloque;
+import modelos.Personaje;
 import modelos.Punto;
 
 /**
@@ -61,6 +62,15 @@ public class MovPacman extends MovPersonaje {
             for (int y = 0; y < this.getPersonaje().getCurrentImage().getHeight(); y++) {
                 this.checkComida(this.getPersonaje().getPosicion().offset(x, y));
             }
+        }
+        
+        // Check intersection with ghosts
+        for (Personaje flan : this.getEscenario().getFantasmas()) {
+            if (!flan.getRectangle().intersects(this.getPersonaje().getRectangle()))
+                continue;
+            
+            // Perdiste
+            javax.swing.JOptionPane.showMessageDialog(null, "¡Has perdido! :(");
         }
     }
     

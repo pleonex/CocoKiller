@@ -19,6 +19,7 @@
 package modelos;
 
 import controladores.MovPersonaje;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -74,6 +75,15 @@ public class Personaje {
     
     public void setPosicion(final Punto pos) {
         this.posicion = pos;
+    }
+    
+    public Rectangle getRectangle() {
+        return new Rectangle(
+                this.posicion.getX(),
+                this.posicion.getY(),
+                this.currImg.getWidth(),
+                this.currImg.getHeight()
+        );
     }
     
     public BufferedImage getCurrentImage() {

@@ -38,13 +38,7 @@ public class Configuracion {
         File currFile;
         try {
             // Load pacman images
-            i = 0;
-            PacmanImgs = new ArrayList<>();
-            currFile = new File(resPath, "pacman" + i + ".png");
-            while (currFile.exists()) {
-                PacmanImgs.add(ImageIO.read(currFile));
-                currFile = new File(resPath, "pacman" + (++i) + ".png");
-            }
+            PacmanImgs = LoadImages(resPath, "pacman", ".png");
             
             // Load ghosts
             FantasmaImgs0 = LoadImages(resPath, "fantasma0_D", ".png");
