@@ -43,7 +43,7 @@ public class GamePanel extends javax.swing.JPanel {
         
         this.escenario = new Escenario(Configuracion.getMapImg(0), Configuracion.getColiImg(0));
         
-        this.pacman = PersonajeFactory.CreaPacman1();
+        this.pacman = PersonajeFactory.CreaPacman1(this.escenario);
         this.pacman.start();
         
         // 60 fps

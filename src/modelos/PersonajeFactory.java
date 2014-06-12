@@ -26,13 +26,14 @@ import gui.Configuracion;
  *
  */
 public class PersonajeFactory {
-    public static Personaje CreaPacman1() {
+    public static Personaje CreaPacman1(final Escenario escenario) {
         return new Personaje(
                 new MovPacman(Direccion.DERECHA),
                 20,
                 3,
                 new Punto(5, 5),
-                Configuracion.getPacmanImgs()
+                Configuracion.getPacmanImgs(),
+                escenario
         );
     }
 }

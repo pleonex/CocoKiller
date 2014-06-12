@@ -34,6 +34,10 @@ public class Personaje {
     
     private final Timer tmrMov;
     
+    private final MovPersonaje movPer;
+    
+    private final Escenario escenario;
+    
     private Image currImg;
     
     private int vidas;
@@ -42,12 +46,15 @@ public class Personaje {
     
     
     public Personaje(final MovPersonaje movPer, final int veloc,
-            final int numVidas, final Punto posIni, final Image[] imgs) {
+            final int numVidas, final Punto posIni, final Image[] imgs,
+            final Escenario escenario) {
         movPer.setPersonaje(this);
+        this.movPer = movPer;
         this.tmrAni = new Timer(ANI_PERIOD, new AnimacionTask(imgs));
         this.tmrMov = new Timer(veloc, movPer);
         this.vidas  = numVidas;
-        this.posicion = posIni;
+        this.posicion  = posIni;
+        this.escenario = escenario;
     }
     
     public int getVidas() {
@@ -72,6 +79,14 @@ public class Personaje {
     
     private void setCurrentImage(final Image img) {
         this.currImg = img;
+    }
+    
+    public Escenario getEscenario() {
+        return this.escenario;
+    }
+    
+    public MovPersonaje getMovimiento() {
+        return this.movPer;
     }
 
     public void start() {
