@@ -42,16 +42,16 @@ public abstract class MovPersonaje implements ActionListener {
         this.personaje = personaje;
     }
     
-    protected Direccion getDireccion() {
+    public Direccion getDireccion() {
         return this.direccion;
+    }
+        
+    public void setDireccion(final Direccion direccion) {
+        this.direccion = direccion;
     }
     
     protected Escenario getEscenario() {
         return this.personaje.getEscenario();
-    }
-    
-    protected void setDireccion(final Direccion direccion) {
-        this.direccion = direccion;
     }
     
     @Override

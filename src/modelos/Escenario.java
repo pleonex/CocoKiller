@@ -149,4 +149,15 @@ public class Escenario {
         this.tmrMovFantasmas.restart();
         this.tmrMovPacmans.restart();
     }
+    
+    public void removePersonaje(final Personaje personaje) {
+        this.tmrEfectos.removeActionListener(personaje.getEfectoTick());
+        if (personaje instanceof Fantasma) {
+            this.tmrMovFantasmas.removeActionListener(personaje.getMovimiento());
+            this.fantasmas.remove(personaje);
+        } else if (personaje instanceof Pacman) {
+            this.tmrMovPacmans.removeActionListener(personaje.getMovimiento());
+            this.pacmans.remove(personaje);
+        }
+    }
 }

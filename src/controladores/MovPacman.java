@@ -18,7 +18,6 @@
 
 package controladores;
 
-import java.awt.event.KeyEvent;
 import modelos.Bloque;
 import modelos.Pacman;
 import modelos.Personaje;
@@ -85,8 +84,8 @@ public class MovPacman extends MovPersonaje {
             if (!flan.getRectangle().intersects(this.pacman.getRectangle()))
                 continue;
             
-            // Perdiste
-            javax.swing.JOptionPane.showMessageDialog(null, "¡Has perdido! :(");
+            // ¡Muerto!
+            this.pacman.morir();
         }
     }
     

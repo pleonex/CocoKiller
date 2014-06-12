@@ -18,9 +18,9 @@
 
 package modelos;
 
+import controladores.Direccion;
 import controladores.MovPersonaje;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
@@ -28,13 +28,17 @@ import java.awt.image.BufferedImage;
  * Representa a un personaje en el juego.
  */
 public abstract class Personaje {
+    private final Punto inicioPos;
+    
+    private final Direccion inicioDir;
+    
     private final MovPersonaje movPer;
     
     private final Escenario escenario;
+        
+    private final BufferedImage defaultImg;
     
     private BufferedImage currImg;
-    
-    private BufferedImage defaultImg;
     
     private int vidas;
     
@@ -44,18 +48,20 @@ public abstract class Personaje {
             final Punto posIni, final BufferedImage defaultImg, final Escenario escenario) {
         this.movPer  = movPer;
         this.vidas   = numVidas;
-        this.posicion  = posIni;
-        this.escenario = escenario;
+        this.posicion   = posIni;
+        this.escenario  = escenario;
         this.defaultImg = defaultImg;
-        this.currImg = defaultImg;
+        this.currImg    = defaultImg;
+        this.inicioPos  = posIni;
+        this.inicioDir  = this.movPer.getDireccion();
     }
     
     public int getVidas() {
         return this.vidas;
     }
     
-    public void setVidas(final int vidas) {
-        this.vidas = vidas;
+    private void removeVida() {
+        this.vidas--;
     }
     
     public Punto getPosicion() {
@@ -104,4 +110,15 @@ public abstract class Personaje {
     }
     
     public abstract ActionListener getEfectoTick();
+    
+    public void morir() {
+        this.removeVida();
+        if (this.getVidas() <= 0) {
+            this.escenario.removePersonaje(this);
+            javax.swing.JOptionPane.showMessageDialog(null, "¡Muerto!");
+        }
+        
+        this.movPer.setDireccion(this.inicioDir);
+        this.setPosicion(this.inicioPos);
+    }
 }
