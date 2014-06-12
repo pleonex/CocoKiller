@@ -20,6 +20,7 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import modelos.Escenario;
 import modelos.Personaje;
 import modelos.Punto;
 
@@ -48,6 +49,10 @@ public abstract class MovPersonaje implements ActionListener {
         return this.direccion;
     }
     
+    protected Escenario getEscenario() {
+        return this.personaje.getEscenario();
+    }
+    
     protected void setDireccion(final Direccion direccion) {
         this.direccion = direccion;
     }
@@ -68,7 +73,7 @@ public abstract class MovPersonaje implements ActionListener {
             this.getPersonaje().setPosicion(sigPos);
         
         // Avisa del cambio
-        this.enCambio(sigPos);
+        this.enCambio();
     }
     
     protected boolean testDireccion(final Direccion direccion) {
@@ -106,5 +111,5 @@ public abstract class MovPersonaje implements ActionListener {
     
     protected abstract Punto getSiguientePosicion();
     
-    protected abstract void enCambio(final Punto punto);
+    protected abstract void enCambio();
 }

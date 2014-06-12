@@ -73,6 +73,10 @@ public class Escenario {
         return this.colisiones[x][y];
     }
     
+    public void clearBloque(final int x, final int y) {
+        this.colisiones[x][y] = Bloque.VACIO;
+    }
+    
     public boolean isPosicionPermitida(final Punto posicion, final int width,
             final int height) {
        

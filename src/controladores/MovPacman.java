@@ -19,6 +19,7 @@
 package controladores;
 
 import java.awt.event.KeyEvent;
+import modelos.Bloque;
 import modelos.Punto;
 
 /**
@@ -28,6 +29,9 @@ public class MovPacman extends MovPersonaje {
     private static final int MAX_INTENTOS = 15;
     private int intentos = -1;
     private Direccion futuraDireccion;
+    
+    private static final int PUNTOS_COMIDA_PEQUE = 10;
+    private static final int PUNTOS_COMIDA_GRANDE = 100;
     
     public MovPacman(final Direccion direccion) {
         super(direccion);
@@ -50,8 +54,18 @@ public class MovPacman extends MovPersonaje {
     }
     
     @Override
-    protected void enCambio(final Punto pos) {
-        if (intentos == -1 || intentos >= MAX_INTENTOS) {
+    protected void enCambio() {
+        this.checkCambioDireccion();
+        
+        for (int x = 0; x < this.getPersonaje().getCurrentImage().getWidth(); x++) {
+            for (int y = 0; y < this.getPersonaje().getCurrentImage().getHeight(); y++) {
+                this.checkComida(this.getPersonaje().getPosicion().offset(x, y));
+            }
+        }
+    }
+    
+    private void checkCambioDireccion() {
+         if (intentos == -1 || intentos >= MAX_INTENTOS) {
             intentos = -1;
             return;
         }
@@ -61,6 +75,21 @@ public class MovPacman extends MovPersonaje {
             intentos = -1;
         } else {
             intentos++;
+        }       
+    }
+    
+    private void checkComida(final Punto pos) {
+        Bloque bloque = this.getEscenario().getBloque(pos.getX(), pos.getY());
+        switch (bloque) {
+            case COM_PEQUE:
+                this.getPersonaje().incrementPuntos(PUNTOS_COMIDA_PEQUE);
+                this.getEscenario().clearBloque(pos.getX(), pos.getY());
+                break;
+                
+            case COM_GRANDE:
+                this.getPersonaje().incrementPuntos(PUNTOS_COMIDA_GRANDE);
+                this.getEscenario().clearBloque(pos.getX(), pos.getY());
+                break;
         }
     }
 }

@@ -44,6 +44,8 @@ public class Personaje {
     
     private Punto posicion;
     
+    private int puntos;
+    
     
     public Personaje(final MovPersonaje movPer, final int veloc,
             final int numVidas, final Punto posIni, final BufferedImage[] imgs,
@@ -88,6 +90,14 @@ public class Personaje {
     
     public MovPersonaje getMovimiento() {
         return this.movPer;
+    }
+    
+    public int getPuntos() {
+        return this.puntos;
+    }
+    
+    public void incrementPuntos(final int incr) {
+        this.puntos += incr;
     }
 
     public void start() {
